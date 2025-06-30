@@ -1,10 +1,12 @@
+import os
 from dotenv import load_dotenv
 import openai
-import os
 
+# Load .env
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# New client-based API usage
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def get_top_matches(df, car_type, color, min_hp, user_prompt):
     filtered = df[
@@ -17,16 +19,19 @@ def get_top_matches(df, car_type, color, min_hp, user_prompt):
 
     prompt = f"""
     Based on the user's description and the following list of Toyota cars, return the 10 best matching models.
-    
+
     Description: "{user_prompt}"
-    
+
     Cars:
     {car_data}
     """
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4o",
-        messages=[{"role": "user", "content": prompt}]
+        messages=[
+            {"role": "system", "content": "You are a Toyota assistant helping customers find cars."},
+            {"role": "user", "content": prompt}
+        ]
     )
 
     response_text = response.choices[0].message.content

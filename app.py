@@ -14,12 +14,21 @@ user_prompt = st.text_area("What do you want in your car?")
 
 if st.button("Find Cars"):
     top_cars = get_top_matches(df, car_type, color, min_hp, user_prompt)
+
     if top_cars:
-        for car in top_cars:
+        for i, car in enumerate(top_cars):
             st.subheader(car["model"])
             st.write(f"Type: {car['type']} | {car['horsepower']} HP | ${car['price']}")
-            if st.button(f"Generate image of {car['model']}", key=car["model"]):
-                img_url = generate_car_image(car, user_prompt)
-                st.image(img_url, caption=f"{car['model']}")
+
+            button_key = f"gen_img_{i}"
+
+            if st.button(f"Generate image of {car['model']}", key=button_key):
+                with st.spinner("Generating image..."):
+                    try:
+                        img_url = generate_car_image(car, user_prompt)
+                        st.image(img_url, caption=f"{car['model']} (AI-generated)")
+                    except Exception as e:
+                        st.error(f"Image generation failed: {e}")
     else:
         st.warning("No cars matched. Try adjusting your filters or prompt.")
+
