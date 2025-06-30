@@ -1,0 +1,6 @@
+model,type,horsepower,color_options,price,fuel_type
+Camry XSE,Sedan,205,"White|Black|Red",31000,Hybrid
+Supra GR,Coupe,382,"Red|Blue|Black",46000,Gas
+RAV4 LE,SUV,203,"Silver|Gray|White",28000,Hybrid
+Corolla LE,Sedan,139,"White|Blue|Silver",21000,Gas
+Highlander XLE,SUV,295,"Black|White|Green",40000,Hybrid
