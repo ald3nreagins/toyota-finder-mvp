@@ -8,11 +8,16 @@ load_dotenv()
 # New client-based API usage
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def get_top_matches(df, car_type, color, min_hp, user_prompt): #This is code provides the tools for the GPT to find match the cars to the database
+def get_top_matches(df, car_type, color, min_hp, drive_type, budget, fuel_type, transmission_type, mpg, user_prompt): #This is code provides the tools for the GPT to find match the cars to the database
     filtered = df[
         (df['type'] == car_type) &
         (df['horsepower'] >= min_hp) &
-        (df['color_options'].str.contains(color))
+        (df['color_options'].str.contains(color)) &
+        (df['Drive Type'] == drive_type) &
+        (df['price'] <= budget) &
+        (df['Fuel Type'] == fuel_type) &
+        (df['Transmission Type'] == transmission_type) &
+        (df['Miles Per Gallon'] >= mpg)
     ]
 
     car_data = filtered.to_dict(orient='records') #This is the cars that match filtered to be in alphabetical order by the columns of records
@@ -30,7 +35,7 @@ def get_top_matches(df, car_type, color, min_hp, user_prompt): #This is code pro
     """
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": "You are a Toyota assistant helping customers find cars."},
             {"role": "user", "content": prompt}
