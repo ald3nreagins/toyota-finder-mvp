@@ -7,7 +7,7 @@ st.title("Find Your Ideal Toyota") #This sets the title to the argument
 
 #df = pd.read_csv("cars.csv") #This links the Toyota Database to the  through a dataframe
 
-df = pd.read_csv("Toyota Car Finder\Expanded_Toyota_Car_Dataset.csv") #I am forgetting how to add a new csv file to the code with the updated car list
+df = pd.read_csv("Expanded_Toyota_Car_Dataset.csv") #I am forgetting how to add a new csv file to the code with the updated car list
 df = df.drop_duplicates(subset=['model']) #This removes
 
 car_type = st.selectbox("Select car type", df["type"].unique()) 
@@ -18,7 +18,7 @@ min_hp = st.slider("Minimum horsepower", 100, 500, 150) #Creates a slider from 1
 
 drive_type = st.selectbox("Select drive type", df["Drive Type"].unique()) #This creates a select box for the drive type
 budget = st.slider("Budget Maximum", 18000, 70000, 25000) #Creates a slider for your budget
-transmission_type = st.selectbox("Select transmission type", df["Transmission Type"].unique()) 
+transmission_type = st.selectbox("Select transmission type", df["Transmission"].unique()) 
 fuel_type = st.selectbox("Select fuel type", df["Fuel Type"].unique())
 mpg = st.slider("Miles per Gallon", 20, 50, 25)
 
@@ -35,13 +35,15 @@ if st.button("Find Cars"):
 
             button_key = f"gen_img_{i}" #creates image based on the input of LLM
 
-            if st.button(f"Generate image of {car['model']}", key=button_key): #creates picture of every car returned by code that maches the preferences of the user
-                with st.spinner("Generating image..."):
-                    try:
-                        img_url = generate_car_image(car, user_prompt)
-                        st.image(img_url, caption=f"{car['model']} (AI-generated)")
-                    except Exception as e:
-                        st.error(f"Image generation failed: {e}")
+    if st.button(f"Generate image of {car['model']}", key=button_key): #creates picture of every car returned by code that maches the preferences of the user
+        st.write("Debug, Button Clicked")
+        with st.spinner("Generating image..."):
+            try:
+                st.write("DEBUG: Calling generate_image")
+                img_url = generate_car_image(car, user_prompt)
+                st.image(img_url, caption=f"{car['model']} (AI-generated)")
+            except Exception as e:
+                st.error(f"Image generation failed: {e}")
     else:
         st.warning("No cars matched. Try adjusting your filters or prompt.") #This returns explains that no cars were found in the database
 

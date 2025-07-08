@@ -7,7 +7,7 @@ st.title("Find Your Ideal Toyota") #This sets the title to the argument
 
 #df = pd.read_csv("cars.csv") #This links the Toyota Database to the  through a dataframe
 
-df = pd.read_csv("Toyota Car Finder\Expanded_Toyota_Car_Dataset.csv") #I am forgetting how to add a new csv file to the code with the updated car list
+df = pd.read_csv("Expanded_Toyota_Car_Dataset.csv") #I am forgetting how to add a new csv file to the code with the updated car list
 df = df.drop_duplicates(subset=['model']) #This removes
 
 car_type = st.selectbox("Select car type", df["type"].unique()) 
@@ -18,7 +18,7 @@ min_hp = st.slider("Minimum horsepower", 100, 500, 150) #Creates a slider from 1
 
 drive_type = st.selectbox("Select drive type", df["Drive Type"].unique()) #This creates a select box for the drive type
 budget = st.slider("Budget Maximum", 18000, 70000, 25000) #Creates a slider for your budget
-transmission_type = st.selectbox("Select transmission type", df["Transmission Type"].unique()) 
+transmission_type = st.selectbox("Select transmission type", df["Transmission"].unique()) 
 fuel_type = st.selectbox("Select fuel type", df["Fuel Type"].unique())
 mpg = st.slider("Miles per Gallon", 20, 50, 25)
 

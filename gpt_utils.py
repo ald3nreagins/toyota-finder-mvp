@@ -1,12 +1,13 @@
 import os
 from dotenv import load_dotenv
-import openai
+from openai import OpenAI
 
 # Load .env
 load_dotenv()
 
 # New client-based API usage
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def get_top_matches(df, car_type, color, min_hp, drive_type, budget, fuel_type, transmission_type, mpg, user_prompt): #This is code provides the tools for the GPT to find match the cars to the database
     filtered = df[
@@ -16,7 +17,7 @@ def get_top_matches(df, car_type, color, min_hp, drive_type, budget, fuel_type, 
         (df['Drive Type'] == drive_type) &
         (df['price'] <= budget) &
         (df['Fuel Type'] == fuel_type) &
-        (df['Transmission Type'] == transmission_type) &
+        (df['Transmission'] == transmission_type) &
         (df['Miles Per Gallon'] >= mpg)
     ]
 
@@ -35,7 +36,7 @@ def get_top_matches(df, car_type, color, min_hp, drive_type, budget, fuel_type, 
     """
 
     response = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a Toyota assistant helping customers find cars."},
             {"role": "user", "content": prompt}
