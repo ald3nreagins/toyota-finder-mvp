@@ -52,3 +52,15 @@ def get_top_matches(df, car_type, color, min_hp, drive_type, budget, fuel_type, 
     return matched[:10]
 
     
+# def get_top_matches(*args, **kwargs):
+    return [{
+        "model": "Corolla",
+        "type": "Sedan",
+        "horsepower": 150,
+        "Miles Per Gallon": 30,
+        "price": 25000,
+        "color_options": "Blue|Black|White",
+        "Drive Type": "FWD",
+        "Fuel Type": "Gasoline",
+        "Transmission": "Automatic"
+    }]
