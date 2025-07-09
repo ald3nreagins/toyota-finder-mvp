@@ -1,9 +1,10 @@
 import os
 from dotenv import load_dotenv
 import openai
+import streamlit as st
 
 load_dotenv()
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai.api_key=os.getenv("OPENAI_API_KEY")
 
 #This code creates the car image based on the user prompt that is in the app.py file. The code returns the image to the user 
 def generate_car_image(car, user_prompt=""):
@@ -11,12 +12,11 @@ def generate_car_image(car, user_prompt=""):
         f"A {car['color_options'].split('|')[0]} Toyota {car['model']}, "
         f"a {car['type']} with {car['horsepower']} horsepower. {user_prompt}"
     )
-
-    response = client.images.generate(
+    response = openai.Image.create(
         model="dall-e-3",
         prompt=description,
         n=1,
         size="512x512"
     )
 
-    return response.data[0].url
+    return response['data'][0]['url']
