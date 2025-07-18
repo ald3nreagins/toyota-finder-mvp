@@ -10,7 +10,7 @@ client = OpenAI()  # Uses OPENAI_API_KEY from env
 # The code returns the image URL to the user.
 def generate_car_image(car, user_prompt=""):
     description = (
-        f"Create a highly detailed, photorealistic concept car inspired by Toyota, "
+        f"Create a highly detailed, photorealistic concept car inspired by Toyota, and it has to be a Toyota car model  even if it is not a real model, "
         f"based on the following description: '{user_prompt}'. "
         f"The car should reflect innovative design elements, combining features like {car['type']}, "
         f"with approximately {car['horsepower']} horsepower, and {car['color_options'].split('|')[0]} color. "
